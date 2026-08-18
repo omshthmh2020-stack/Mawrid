@@ -12,14 +12,17 @@
     "@supabase/supabase-js": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "typescript": "latest"
+    "react-dom": "
   }
+  "devDependencies": {
+  "@tailwindcss/postcss": "latest",
+  "@types/node": "latest",
+  "@types/react": "latest",
+  "@types/react-dom": "latest",
+  "postcss": "latest",
+  "tailwindcss": "latest",
+  "typescript": "latest"
+}
 }{
   "name": "mawrid",
   "version": "1.0.0",
