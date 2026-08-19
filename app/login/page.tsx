@@ -1,74 +1,86 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("student");
 
-  async function handleLogin(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
 
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+    if (!name.trim() || !phone.trim()) {
+      alert("أكملي البيانات أولًا");
       return;
     }
 
-    window.location.href = "/";
+    alert(
+      role === "student"
+        ? "تم تجهيز حساب الطالبة"
+        : "تم تجهيز حساب المشرفة"
+    );
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <form
-        onSubmit={handleLogin}
-        className="w-full max-w-md space-y-5 rounded-2xl p-6 shadow"
-      >
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">تسجيل الدخول</h1>
-          <p className="mt-2 text-gray-600">
-            أهلًا بكِ في منصة مورد 🌷
+    <main className="min-h-screen px-5 py-12">
+      <div className="mx-auto max-w-md rounded-3xl border bg-white p-7 shadow-sm">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold">مرحبًا بكِ في مورد 🌷</h1>
+          <p className="mt-3 text-sm text-gray-500">
+            سجلي دخولك للمتابعة
           </p>
         </div>
 
-        <input
-          type="email"
-          placeholder="البريد الإلكتروني"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-xl border p-3"
-          required
-        />
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              الاسم
+            </label>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-2xl border px-4 py-3 outline-none"
+              placeholder="اكتبي اسمك"
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="كلمة المرور"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-xl border p-3"
-          required
-        />
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              رقم الجوال
+            </label>
+            <input
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full rounded-2xl border px-4 py-3 outline-none"
+              placeholder="05xxxxxxxx"
+              inputMode="tel"
+            />
+          </div>
 
-        {error && (
-          <p className="text-center text-sm text-red-600">{error}</p>
-        )}
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              نوع الحساب
+            </label>
 
-        <button
-          type="submit"
-          className="w-full rounded-xl bg-black p-3 text-white"
-        >
-          دخول
-        </button>
-      </form>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full rounded-2xl border px-4 py-3"
+            >
+              <option value="student">طالبة</option>
+              <option value="supervisor">مشرفة</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-2xl bg-black px-4 py-3 font-medium text-white"
+          >
+            دخول
+          </button>
+        </form>
+      </div>
     </main>
   );
 }
